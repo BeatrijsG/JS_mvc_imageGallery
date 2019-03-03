@@ -1,44 +1,85 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Image gallery</title>
+	<meta charset="UTF-8">
+	<title>Image gallery - opdracht</title>
 	<link rel="stylesheet" type="text/css" href="gallery.css">
 </head>
 <body>
-	<p><img id="largeImg" src="afbeeldingen/groot/1.jpg" alt="Large image"></p>
+	<p>
+		<img id="largeImg" src="afbeeldingen/groot/1.jpg" alt="Large image">
+	</p>
 	<div id="thumbs">
-		<a href="afbeeldingen/groot/1.jpg" title="Image 1"><img src="afbeeldingen/1.jpg"></a>
+		<a href="afbeeldingen/groot/1.jpg" title="Image 1">
+			<img src="afbeeldingen/1.jpg">
+		</a>
 	</div>
 	<button id="add">Voeg afbeelding toe</button>
-	<script>
-		var largeImg = document.getElementById('largeImg');
-		var imagesBron="afbeeldingen/";
-		var teller=2;
 
-		document.getElementById('add').addEventListener('click', function(e){
-			var nieuweThumb = document.createElement("A");
-			var newHref=imagesBron + "groot/" + teller + ".jpg";
-			console.log(newHref);
-			nieuweThumb.href=newHref;
-			nieuweThumb.title="Image" + teller;
+	<script type="text/javascript">
+		"use strict";
 
-			var nieuweImg =document.createElement("IMG");
-			nieuweImg.src=imagesBron + teller + ".jpg";
-			nieuweThumb.appendChild(nieuweImg);
-
-			var divThumbs = document.getElementById("thumbs");
-			divThumbs.appendChild(nieuweThumb);
-			teller++
-		});
-
-		document.getElementById('thumbs').addEventListener('click', function(e) {
-			if(e.target.nodeName ==  "IMG"){
-				var anchor = e.target.parentNode;
-				largeImg.src = anchor.href;
-				largeImg.alt = anchor.title;
+		(function(){
+			var model = {
+				data: {
+					teller: 2,
+				}
 			}
-			e.preventDefault();
-		})
+			var view = {
+				data: {
+					imagesBron: "afbeeldingen/",
+				}
+			}
+			var controller = {
+				data: {
+					largeImg: "",
+					buttonAdd: "",
+				},
+				init: function(){
+					controller.data.largeImg = document.getElementById('largeImg');
+					controller.data.buttonAdd = document.getElementById('add');
+					controller.data.buttonAdd.addEventListener('click', function(e){
+						console.log('test: eventListener bij klik op knop add');
+					});
+				}
+			}
+			window.addEventListener("DOMContentLoaded", function(){
+				controller.init();
+			})
+		})();
+
+		// view: showNewThumb()
+		// controller: initEventListeners(), setThumb(), verhoogTeller(), SetLargeImg()
+
+
+		// var largeImg = document.getElementById('largeImg');
+		// var imagesBron="afbeeldingen/";
+		// var teller=2;
+
+		// document.getElementById('add').addEventListener('click', function(e){
+		// 	var nieuweThumb = document.createElement("A");
+		// 	var newHref=imagesBron + "groot/" + teller + ".jpg";
+		// 	console.log(newHref);
+		// 	nieuweThumb.href=newHref;
+		// 	nieuweThumb.title="Image" + teller;
+
+		// 	var nieuweImg =document.createElement("IMG");
+		// 	nieuweImg.src=imagesBron + teller + ".jpg";
+		// 	nieuweThumb.appendChild(nieuweImg);
+
+		// 	var divThumbs = document.getElementById("thumbs");
+		// 	divThumbs.appendChild(nieuweThumb);
+		// 	teller++
+		// });
+
+		// document.getElementById('thumbs').addEventListener('click', function(e) {
+		// 	if(e.target.nodeName ==  "IMG"){
+		// 		var anchor = e.target.parentNode;
+		// 		largeImg.src = anchor.href;
+		// 		largeImg.alt = anchor.title;
+		// 	}
+		// 	e.preventDefault();
+		// })
 	</script>
 </body>
 </html>
