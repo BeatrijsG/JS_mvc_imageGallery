@@ -23,38 +23,65 @@
 			var model = {
 				data: {
 					teller: 2,
+				},
+				tellerVerhogen(){
+					model.data.teller++;
 				}
 			}
 			var view = {
 				data: {
 					imagesBron: "afbeeldingen/",
+					divThumbs: "",
+				},
+				init: function(){
+					view.data.divThumbs = document.getElementById("thumbs");
+				},
+				toevoegenThumb: function(nieuweThumb){
+					view.data.divThumbs.appendChild(nieuweThumb);
 				}
 			}
 			var controller = {
 				data: {
 					largeImg: "",
 					buttonAdd: "",
+					nieuweThumb: "",
 				},
 				init: function(){
 					controller.data.largeImg = document.getElementById('largeImg');
 					controller.data.buttonAdd = document.getElementById('add');
 					controller.data.buttonAdd.addEventListener('click', function(e){
-						console.log('test: eventListener bij klik op knop add');
+						// console.log('test: eventListener bij klik op knop add');
+						controller.nieuweLinkMaken();
+						controller.nieuweImgMaken();
+						view.toevoegenThumb(controller.data.nieuweThumb);
+						model.tellerVerhogen();
+						controller.clear();
 					});
+				},
+				nieuweLinkMaken: function(){
+					controller.data.nieuweThumb = document.createElement("a");
+					var nieuweHref = view.data.imagesBron + "groot/" + model.data.teller + ".jpg";
+					// console.log(nieuweHref);
+					controller.data.nieuweThumb.href = nieuweHref;
+					controller.data.nieuweThumb.title = "Image" + model.data.teller;
+				},
+				nieuweImgMaken: function(){
+					var nieuweImg = document.createElement("img");
+					nieuweImg.src = view.data.imagesBron + model.data.teller + ".jpg";
+					controller.data.nieuweThumb.appendChild(nieuweImg);
+				},
+				clear: function(){
+					controller.nieuweThumb = '';
 				}
 			}
 			window.addEventListener("DOMContentLoaded", function(){
+				view.init();
 				controller.init();
 			})
 		})();
 
 		// view: showNewThumb()
 		// controller: initEventListeners(), setThumb(), verhoogTeller(), SetLargeImg()
-
-
-		// var largeImg = document.getElementById('largeImg');
-		// var imagesBron="afbeeldingen/";
-		// var teller=2;
 
 		// document.getElementById('add').addEventListener('click', function(e){
 		// 	var nieuweThumb = document.createElement("A");
