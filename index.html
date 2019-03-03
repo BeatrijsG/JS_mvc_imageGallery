@@ -22,7 +22,7 @@
 		(function(){
 			var model = {
 				data: {
-					teller: 2,
+					teller: 2
 				},
 				tellerVerhogen(){
 					model.data.teller++;
@@ -30,13 +30,18 @@
 			}
 			var view = {
 				data: {
-					divThumbs: "",
+					divThumbs: ""
 				},
 				init: function(){
 					view.data.divThumbs = document.getElementById("thumbs");
 				},
 				toevoegenThumb: function(nieuweThumb){
 					view.data.divThumbs.appendChild(nieuweThumb);
+				},
+				toonImgGroot: function(image){
+					var anchor = image.parentNode;
+					controller.data.largeImg.src = anchor.href;
+					controller.data.largeImg.alt = anchor.title;
 				}
 			}
 			var controller = {
@@ -44,9 +49,9 @@
 					imagesBron: "afbeeldingen/",
 					largeImg: "",
 					buttonAdd: "",
-					nieuweThumb: "",
-					nieuweImg: "",
 					thumbs: "",
+					nieuweThumb: "",
+					nieuweImg: ""
 				},
 				init: function(){
 					controller.data.largeImg = document.getElementById('largeImg');
@@ -55,9 +60,7 @@
 					controller.data.buttonAdd.addEventListener('click', controller.thumbToevoegen);
 					controller.data.thumbs.addEventListener('click', function(e) {
 						if(e.target.nodeName == "IMG"){
-							var anchor = e.target.parentNode;
-							controller.data.largeImg.src = anchor.href;
-							controller.data.largeImg.alt = anchor.title;
+							view.toonImgGroot(e.target);
 						}
 						e.preventDefault();
 					})
@@ -66,6 +69,7 @@
 					controller.nieuweLinkMaken();
 					controller.nieuweImgMaken();
 					controller.imgToevoegen();
+					view.toevoegenThumb(controller.data.nieuweThumb);
 					model.tellerVerhogen();
 					controller.clear();
 				},
@@ -78,10 +82,9 @@
 				nieuweImgMaken: function(){
 					controller.data.nieuweImg = document.createElement("img");
 					controller.data.nieuweImg.src = controller.data.imagesBron + model.data.teller + ".jpg";
-					controller.data.nieuweThumb.appendChild(controller.data.nieuweImg);
 				},
 				imgToevoegen: function(){
-					view.toevoegenThumb(controller.data.nieuweThumb);
+					controller.data.nieuweThumb.appendChild(controller.data.nieuweImg);
 				},
 				clear: function(){
 					controller.data.nieuweThumb = '';
@@ -93,9 +96,6 @@
 				controller.init();
 			})
 		})();
-
-		// view: showNewThumb()
-		// controller: initEventListeners(), setThumb(), verhoogTeller(), SetLargeImg()
 
 	</script>
 </body>
