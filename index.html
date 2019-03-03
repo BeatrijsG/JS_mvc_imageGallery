@@ -46,11 +46,21 @@
 					buttonAdd: "",
 					nieuweThumb: "",
 					nieuweImg: "",
+					thumbs: "",
 				},
 				init: function(){
 					controller.data.largeImg = document.getElementById('largeImg');
 					controller.data.buttonAdd = document.getElementById('add');
+					controller.data.thumbs = document.getElementById('thumbs');
 					controller.data.buttonAdd.addEventListener('click', controller.thumbToevoegen);
+					controller.data.thumbs.addEventListener('click', function(e) {
+						if(e.target.nodeName == "IMG"){
+							var anchor = e.target.parentNode;
+							controller.data.largeImg.src = anchor.href;
+							controller.data.largeImg.alt = anchor.title;
+						}
+						e.preventDefault();
+					})
 				},
 				thumbToevoegen: function(){
 					controller.nieuweLinkMaken();
@@ -87,30 +97,6 @@
 		// view: showNewThumb()
 		// controller: initEventListeners(), setThumb(), verhoogTeller(), SetLargeImg()
 
-		// document.getElementById('add').addEventListener('click', function(e){
-		// 	var nieuweThumb = document.createElement("A");
-		// 	var newHref=imagesBron + "groot/" + teller + ".jpg";
-		// 	console.log(newHref);
-		// 	nieuweThumb.href=newHref;
-		// 	nieuweThumb.title="Image" + teller;
-
-		// 	var nieuweImg =document.createElement("IMG");
-		// 	nieuweImg.src=imagesBron + teller + ".jpg";
-		// 	nieuweThumb.appendChild(nieuweImg);
-
-		// 	var divThumbs = document.getElementById("thumbs");
-		// 	divThumbs.appendChild(nieuweThumb);
-		// 	teller++
-		// });
-
-		// document.getElementById('thumbs').addEventListener('click', function(e) {
-		// 	if(e.target.nodeName ==  "IMG"){
-		// 		var anchor = e.target.parentNode;
-		// 		largeImg.src = anchor.href;
-		// 		largeImg.alt = anchor.title;
-		// 	}
-		// 	e.preventDefault();
-		// })
 	</script>
 </body>
 </html>
