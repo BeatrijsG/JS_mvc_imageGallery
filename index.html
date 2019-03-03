@@ -30,7 +30,6 @@
 			}
 			var view = {
 				data: {
-					imagesBron: "afbeeldingen/",
 					divThumbs: "",
 				},
 				init: function(){
@@ -42,36 +41,41 @@
 			}
 			var controller = {
 				data: {
+					imagesBron: "afbeeldingen/",
 					largeImg: "",
 					buttonAdd: "",
 					nieuweThumb: "",
+					nieuweImg: "",
 				},
 				init: function(){
 					controller.data.largeImg = document.getElementById('largeImg');
 					controller.data.buttonAdd = document.getElementById('add');
-					controller.data.buttonAdd.addEventListener('click', function(e){
-						// console.log('test: eventListener bij klik op knop add');
-						controller.nieuweLinkMaken();
-						controller.nieuweImgMaken();
-						view.toevoegenThumb(controller.data.nieuweThumb);
-						model.tellerVerhogen();
-						controller.clear();
-					});
+					controller.data.buttonAdd.addEventListener('click', controller.thumbToevoegen);
+				},
+				thumbToevoegen: function(){
+					controller.nieuweLinkMaken();
+					controller.nieuweImgMaken();
+					controller.imgToevoegen();
+					model.tellerVerhogen();
+					controller.clear();
 				},
 				nieuweLinkMaken: function(){
 					controller.data.nieuweThumb = document.createElement("a");
-					var nieuweHref = view.data.imagesBron + "groot/" + model.data.teller + ".jpg";
-					// console.log(nieuweHref);
+					var nieuweHref = controller.data.imagesBron + "groot/" + model.data.teller + ".jpg";
 					controller.data.nieuweThumb.href = nieuweHref;
 					controller.data.nieuweThumb.title = "Image" + model.data.teller;
 				},
 				nieuweImgMaken: function(){
-					var nieuweImg = document.createElement("img");
-					nieuweImg.src = view.data.imagesBron + model.data.teller + ".jpg";
-					controller.data.nieuweThumb.appendChild(nieuweImg);
+					controller.data.nieuweImg = document.createElement("img");
+					controller.data.nieuweImg.src = controller.data.imagesBron + model.data.teller + ".jpg";
+					controller.data.nieuweThumb.appendChild(controller.data.nieuweImg);
+				},
+				imgToevoegen: function(){
+					view.toevoegenThumb(controller.data.nieuweThumb);
 				},
 				clear: function(){
-					controller.nieuweThumb = '';
+					controller.data.nieuweThumb = '';
+					controller.data.nieuweImg = '';
 				}
 			}
 			window.addEventListener("DOMContentLoaded", function(){
